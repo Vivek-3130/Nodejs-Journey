@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Add link to external CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>TODO APP</h1> <!-- Added beautiful heading -->
+        <h2><%= day %></h2>
+        <ul>
+            <% for(let i = 0; i < newListItems.length; i++){ %>
+                <li>
+                    <input type="checkbox" name="checkbox" value="<%= i %>" id="checkbox<%= i %>" onchange="this.form.submit()">
+                    <label for="checkbox<%= i %>"><%= newListItems[i] %></label>
+                </li>
+            <% } %>
+        </ul>
+        <form action="/" method="POST">
+            <input type="text" name="newItem" autocomplete="off">
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    <form id="deleteForm" action="/delete" method="POST">
+        <input type="hidden" id="checkboxInput" name="checkbox">
+    </form>
+    <script>
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener("change", () => {
+                document.getElementById("checkboxInput").value = checkbox.value;
+                document.getElementById("deleteForm").submit();
+            });
+        });
+    </script>
+</body>
+</html>
